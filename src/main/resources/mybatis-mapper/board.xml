@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myspring.dao.board">
+
+	<insert id="insert">
+		INSERT INTO BOARD (title, content, writer) values
+		(#{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="listAll" resultType="com.myspring.model.board.dto.BoardDTO">
+		<include refid="paging_header" />
+		SELECT bno, title, writer, name, b.regdate, viewcnt
+    	FROM BOARD b, MEMBER m
+		<include refid="search" />
+		ORDER BY BNO DESC
+		<include refid="paging_footer" />
+	</select>
+	
+	<select id="countArticle" resultType="int">
+		SELECT COUNT(*)
+		FROM BOARD b, MEMBER m
+		<include refid="search" />
+	</select>
+	
+	<select id="view" resultType="com.myspring.model.board.dto.BoardDTO">
+		SELECT bno, title, content, b.regdate, viewcnt, name, writer, m.image_name
+		FROM BOARD b, MEMBER m
+		WHERE b.writer=m.user_id AND bno=#{bno}
+	</select>
+	
+	<update id="increaseViewcnt">
+		UPDATE BOARD
+		SET viewcnt=viewcnt+1
+		WHERE bno=#{bno}
+	</update>
+	
+	<update id="updateArticle">
+		UPDATE BOARD SET
+			title=#{title}, content=#{content}
+		WHERE bno=#{bno}
+	</update>
+	
+	<delete id="deleteArticle">
+		DELETE FROM BOARD
+		WHERE bno=#{bno}	
+	</delete>
+	
+	<sql id="search">
+		<choose>
+			<when test="search_option == 'all' ">
+				WHERE b.writer = m.user_id
+					AND (name like CONCAT('%', #{keyword}, '%')
+					OR content like CONCAT('%', #{keyword}, '%')
+					OR title like CONCAT('%', #{keyword}, '%') )
+			</when>
+			<otherwise>
+				WHERE b.writer = m.user_id
+					AND ${search_option} like CONCAT('%', #{keyword}, '%') AND ${search_option} like CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<update id="init">
+		SET @rownum:=0
+	</update>
+	
+	<sql id="paging_header">
+		SELECT *
+		FROM ( 
+			SELECT @rownum:=@rownum+1 AS rn, A.*
+			FROM (
+	</sql>
+	
+	<sql id="paging_footer">
+			) A
+		)B 
+		WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+</mapper>

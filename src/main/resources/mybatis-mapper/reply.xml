@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="com.myspring.dao.reply">
+	
+	<insert id="insertReply">
+		INSERT INTO REPLY
+		(bno, reply_text, replyer) VALUES
+		(#{bno}, #{reply_text}, #{replyer})
+	</insert>
+	
+	<update id="updateReply">
+		UPDATE REPLY SET
+		reply_text=#{reply_text}
+		WHERE rno=#{rno}
+	</update>
+	
+	<delete id="deleteReply">
+		DELETE FROM REPLY
+		WHERE rno=#{rno}
+	</delete>
+	
+	<delete id="deleteAllReply">
+		DELETE FROM REPLY
+		WHERE bno=#{bno}	
+	</delete>
+	
+	<select id="listReply" resultType="com.myspring.model.reply.dto.ReplyDTO">
+		<include refid="paging_header" />
+		SELECT rno, bno, reply_text, replyer, regdate
+    	FROM REPLY
+    	WHERE bno=#{bno}
+   		ORDER BY rno DESC
+   		 <include refid="paging_footer" />
+	</select>
+
+	<select id="count" resultType="int">
+		SELECT COUNT(*) 
+		FROM REPLY
+		WHERE bno=#{bno}
+	</select>
+	
+	<update id="init">
+		SET @rownum:=0
+	</update>
+	
+	<sql id="paging_header">
+		SELECT *
+		FROM ( 
+			SELECT @rownum:=@rownum+1 AS rn, A.*
+			FROM (
+	</sql>
+	
+	<sql id="paging_footer">
+			) A
+		)B 
+		WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+</mapper>
+
+
+
+
+
+
+
+

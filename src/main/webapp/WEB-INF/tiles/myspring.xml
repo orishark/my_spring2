@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="myspringTemplate" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="title" value="myspring"/>
+		<put-attribute name="header" value="/WEB-INF/views/common/mainHeader.jsp"/>
+	</definition>
+	
+	<definition name="replyTemplate" template="/WEB-INF/views/reply_layout.jsp">
+		<put-attribute name="title" value="myspring"/>
+	</definition>
+	
+	<definition name="list" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/board/list.jsp" />
+	</definition>
+	
+	<definition name="sign_up" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/sign_up/sign_up.jsp" />
+	</definition>
+	
+	<definition name="sign_in" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/sign_in/sign_in.jsp" />
+	</definition>
+	
+	<definition name="sign_in_result" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/sign_in/sign_in_result.jsp" />
+	</definition>
+	
+	<definition name="profile" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/profile/profile.jsp" />
+	</definition>
+	
+	<definition name="edit_memberInfo" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/edit_memberInfo/edit_memberInfo.jsp" />
+	</definition>
+	
+	<definition name="member_list" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/member_list/member_list.jsp" />
+	</definition>
+	
+	<definition name="write" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/board/write.jsp" />
+	</definition>
+	
+	<definition name="view" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/board/view.jsp" />
+	</definition>
+	
+	<definition name="edit" extends="myspringTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/board/edit.jsp" />
+	</definition>
+	
+	<definition name="reply_list" extends="replyTemplate">
+		<put-attribute name="contents" value="/WEB-INF/views/pages/board/reply_list.jsp" />
+	</definition>
+</tiles-definitions>

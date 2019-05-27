@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myspring.dao.member">
+	
+	<insert id="addMember">
+		INSERT INTO MEMBER(user_id, password, name, email, image_name) 
+		VALUES (#{user_id}, #{password}, #{name}, #{email}, #{image_name})
+	</insert>
+
+	<select id="selectMemberList" resultType="com.myspring.model.member.dto.MemberDTO">
+		SELECT * FROM MEMBER
+	</select>
+	
+	<select id="login_check" resultType="String">
+		SELECT name FROM MEMBER
+		WHERE user_id=#{user_id} and password=#{password}
+	</select>
+	
+	<select id="userId_check" resultType="String">
+		SELECT name FROM MEMBER
+		WHERE user_id=#{user_id}
+	</select>
+	
+	<select id="selectMemberInfo" resultType="com.myspring.model.member.dto.MemberDTO">
+		SELECT * FROM MEMBER
+		WHERE user_id=#{user_id}
+	</select>
+
+	<update id="updateMemberInfo">
+		UPDATE MEMBER SET
+			password=#{password}, email=#{email}, image_name=#{image_name}
+		WHERE user_id=#{user_id}
+	</update>
+	
+</mapper>
