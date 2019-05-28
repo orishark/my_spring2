@@ -11,6 +11,8 @@
 	<groupId>com.my-spring</groupId>
 	<artifactId>my-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
 	<name>my-spring</name>
 	<description>Demo project for Spring Boot</description>
 
